@@ -1,3 +1,4 @@
+### 转载自：https://github.com/tech-shrimp/docker_image_pusher
 修改了一下脚本，改了一下名称，将 `/` 改为了`_`
 例如镜像：selenium/standalone-chrome:latest
 拉取地址：registry.cn-hangzhou.aliyuncs.com/githubimage/selenium_standalone-chrome:latest
