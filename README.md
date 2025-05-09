@@ -1,7 +1,13 @@
 ### 转载自：https://github.com/tech-shrimp/docker_image_pusher
-修改了一下脚本，改了一下名称，将 `/` 改为了`_`
+修改了一下脚本：.github/workflows/docker.yaml
+1. 改了一下名称，将 `/` 改为了`_`
 例如镜像：selenium/standalone-chrome:latest
 拉取地址：registry.cn-hangzhou.aliyuncs.com/githubimage/selenium_standalone-chrome:latest
+2. 将 ALIYUN_NAME_SPACE、ALIYUN_REGISTRY 这两个变量改为了明文，方便复制，可以根据自己的需要来做明文或者密文
+  # ALIYUN_REGISTRY: "${{ secrets.ALIYUN_REGISTRY }}"
+  ALIYUN_REGISTRY: "registry.cn-hangzhou.aliyuncs.com"
+  # ALIYUN_NAME_SPACE: "${{ secrets.ALIYUN_NAME_SPACE }}"
+  ALIYUN_NAME_SPACE: "githubimage"
 
 # Docker Images Pusher
 
