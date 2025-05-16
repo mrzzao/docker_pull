@@ -8,7 +8,7 @@
   ALIYUN_REGISTRY: "registry.cn-hangzhou.aliyuncs.com"
   #ALIYUN_NAME_SPACE: "${{ secrets.ALIYUN_NAME_SPACE }}"
   ALIYUN_NAME_SPACE: "githubimage"
-
+> 默认是amd64镜像，其他的自己想办法。。
 # Docker Images Pusher
 
 使用Github Action将DockerHub镜像转存到阿里云私有仓库，供国内服务器使用，免费易用
