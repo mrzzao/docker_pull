@@ -1,2 +1,1 @@
-nocobase/nocobase:1.6
-postgres:16
+certbot/certbot:v4.0.0
