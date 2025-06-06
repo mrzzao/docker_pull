@@ -1,1 +1,2 @@
-debian:bullseye-slim
+chatgptweb/chatgpt-web:v3.2.0
+mongo:8.0.10
