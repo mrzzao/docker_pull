@@ -1,1 +1,1 @@
-mongo-gui:latest
+ugleiton/mongo-gui:latest
