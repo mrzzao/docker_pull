@@ -1,1 +1,1 @@
-louislam/uptime-kuma:1.23.16-alpine
+rustdesk/rustdesk-server:1.1.14
