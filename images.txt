@@ -1,1 +1,1 @@
-alpine:3.22.1
+vllm/vllm-openai:v0.8.5
