@@ -1,1 +1,1 @@
-vllm/vllm-openai:v0.7.3
+elasticsearch:8.13.4
