@@ -1,1 +1,1 @@
-powerdns/pdns-recursor-49:4.9.8
+powerdnsadmin/pda-legacy:v0.4.2
