@@ -1,6 +1,2 @@
-budibase/apps:3.15.0
-budibase/worker:3.15.0
-minio/minio:RELEASE.2025-07-23T15-54-02Z
-budibase/proxy:3.15.0
-budibase/couchdb:v3.3.3-sqs-v2.1.1
-redis:8.2
+mysql:5.7
+netcccyun/dnsmgr
