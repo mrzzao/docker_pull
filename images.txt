@@ -1,2 +1,1 @@
-mysql:5.7
-netcccyun/dnsmgr
+powerdns/pdns-auth-49:4.9.8
