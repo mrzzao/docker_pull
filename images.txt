@@ -1,1 +1,1 @@
-powerdnsadmin/pda-legacy:v0.4.2
+sickcodes/docker-osx:latest
