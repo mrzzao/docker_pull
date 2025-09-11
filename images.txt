@@ -1,1 +1,1 @@
-rustfs/rustfs:1.0.0-alpha.48
+jumpserver/jms_all:v4.10.7
