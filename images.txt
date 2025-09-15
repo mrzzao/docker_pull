@@ -1,1 +1,1 @@
-node:22-slim
+ubuntu:24.04
