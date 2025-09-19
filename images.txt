@@ -1,1 +1,1 @@
-lmsysorg/sglang:v0.2.15-cu118
+python:3.10-slim
