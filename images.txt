@@ -1,1 +1,1 @@
-ghcr.io/huggingface/text-generation-inference:latest
+lmsysorg/sglang:v0.2.15-cu118
