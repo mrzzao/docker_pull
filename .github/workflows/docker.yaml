@@ -26,7 +26,14 @@ jobs:
 
     - name: Check out code
       uses: actions/checkout@v2
-
+      
+    - name: Clean up Docker resources
+      run: |
+        # 清理未使用的 Docker 资源
+        docker system prune -a -f --volumes
+        # 检查磁盘空间
+        df -h
+        
     - name: Build and push image Aliyun
       run: |
         docker login -u $ALIYUN_REGISTRY_USER -p $ALIYUN_REGISTRY_PASSWORD $ALIYUN_REGISTRY
