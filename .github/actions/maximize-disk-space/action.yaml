@@ -1,18 +1,18 @@
-name: 'Move Docker storage'
-description: 'Move Docker data directory to /mnt partition for more space'
+name: 'Clean Docker storage'
+description: 'Clean Docker data and use /mnt partition for more space'
 branding:
   icon: 'hard-drive'
   color: 'blue'
 inputs:
-  enable-move:
-    description: 'Enable moving Docker data to /mnt'
+  enable-clean:
+    description: 'Enable cleaning Docker data and using /mnt'
     required: false
     default: 'true'
 
 runs:
   using: "composite"
   steps:
-    - name: Check disk space before move
+    - name: Check disk space before clean
       shell: bash
       run: |
         echo "=== 当前磁盘空间 ==="
@@ -20,31 +20,26 @@ runs:
         echo "=== Docker 存储信息 ==="
         docker system df || true
 
-    - name: Move Docker data to /mnt
-      if: inputs.enable-move == 'true'
+    - name: Clean Docker data and use /mnt
+      if: inputs.enable-clean == 'true'
       shell: bash
       run: |
-        echo "=== 移动 Docker 数据到 /mnt 分区 ==="
+        echo "=== 清理 Docker 数据并使用 /mnt 分区 ==="
         
         # 停止 Docker 服务
         echo "停止 Docker 服务..."
         sudo systemctl stop docker
         
-        # 清理 /mnt 下的旧数据（如果有）
-        echo "清理 /mnt 下的旧数据..."
+        # 直接删除 Docker 数据，不移动
+        echo "删除 Docker 数据..."
+        sudo rm -rf /var/lib/docker
         sudo rm -rf /mnt/docker
         
-        # 移动 Docker 数据到 /mnt
-        echo "移动 Docker 数据..."
-        if [ -d "/var/lib/docker" ]; then
-          sudo mv /var/lib/docker /mnt/
-          echo "成功移动现有 Docker 数据"
-        else
-          sudo mkdir -p /mnt/docker
-          echo "创建新的 Docker 数据目录"
-        fi
+        # 在 /mnt 创建新的 Docker 数据目录
+        echo "在 /mnt 创建新的 Docker 数据目录..."
+        sudo mkdir -p /mnt/docker
         
-        # 创建符号链接
+        # 创建符号链接指向 /mnt
         echo "创建符号链接..."
         sudo ln -sf /mnt/docker /var/lib/docker
         
@@ -55,7 +50,7 @@ runs:
         # 等待 Docker 启动
         sleep 5
         
-        echo "Docker 数据移动完成"
+        echo "Docker 数据清理和重定向完成"
 
     - name: Verify Docker storage
       shell: bash
