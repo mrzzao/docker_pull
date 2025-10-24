@@ -35,20 +35,25 @@ runs:
         sudo rm -rf /var/lib/docker
         sudo rm -rf /mnt/docker
         
-        # 在 /mnt 创建新的 Docker 数据目录
+        # 在 /mnt 创建新的 Docker 数据目录并设置正确权限
         echo "在 /mnt 创建新的 Docker 数据目录..."
         sudo mkdir -p /mnt/docker
+        sudo chmod 755 /mnt/docker
+        sudo chown root:root /mnt/docker
         
         # 创建符号链接指向 /mnt
         echo "创建符号链接..."
         sudo ln -sf /mnt/docker /var/lib/docker
         
+        # 设置 /var/lib/docker 目录权限（符号链接的权限）
+        sudo chmod 755 /var/lib/docker
+        
         # 启动 Docker 服务
         echo "启动 Docker 服务..."
         sudo systemctl start docker
         
-        # 等待 Docker 启动
-        sleep 5
+        # 等待 Docker 启动并初始化
+        sleep 10
         
         echo "Docker 数据清理和重定向完成"
 
@@ -62,5 +67,7 @@ runs:
         docker info | grep "Docker Root Dir" || echo "Docker 未运行"
         echo "符号链接:"
         ls -la /var/lib/docker
-        echo "实际数据位置:"
-        ls -la /mnt/docker
+        echo "实际数据位置权限:"
+        sudo ls -la /mnt/docker
+        echo "Docker 服务状态:"
+        sudo systemctl status docker --no-pager
