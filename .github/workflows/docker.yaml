@@ -5,49 +5,61 @@ on:
   push:
     branches: [ main ]
 
-
 env:
+  # ALIYUN_NAME_SPACE: "${{ secrets.ALIYUN_NAME_SPACE }}"
   # ALIYUN_REGISTRY: "${{ secrets.ALIYUN_REGISTRY }}"
   ALIYUN_REGISTRY: "registry.cn-hangzhou.aliyuncs.com"
-  # ALIYUN_NAME_SPACE: "${{ secrets.ALIYUN_NAME_SPACE }}"
   ALIYUN_NAME_SPACE: "githubimage"
   ALIYUN_REGISTRY_USER: "${{ secrets.ALIYUN_REGISTRY_USER }}"
   ALIYUN_REGISTRY_PASSWORD: "${{ secrets.ALIYUN_REGISTRY_PASSWORD }}"
 
 jobs:
-
   build:
     name: Pull
-    #runs-on: ubuntu-latest
     runs-on: ubuntu-22.04
     steps:
+    # 调用本地复合 Action
+    - name: Maximize disk space
+      uses: ./.github/actions/maximize-disk-space
+      with:
+        remove-docker-images: true
+        remove-dotnet: true
+        remove-android: true
+        remove-codeql: true
+        swap-size-mb: 4096
+
     - name: Setup Docker buildx
-      uses: docker/setup-buildx-action@79abd3f86f79a9d68a23c75a09a9a85889262adf
+      uses: docker/setup-buildx-action@v3
 
     - name: Check out code
-      uses: actions/checkout@v2
-      
-    - name: Clean up Docker resources
-      run: |
-        # 清理未使用的 Docker 资源
-        docker system prune -a -f --volumes
-        # 检查磁盘空间
-        df -h
-        
+      uses: actions/checkout@v4
+
     - name: Build and push image Aliyun
       run: |
         docker login -u $ALIYUN_REGISTRY_USER -p $ALIYUN_REGISTRY_PASSWORD $ALIYUN_REGISTRY
+        
+        echo "初始磁盘空间:"
+        df -h
+        
+        count=0
         while IFS= read -r line; do
           [[ -z "$line" ]] && continue
-          echo "docker pull $line"
+          echo "=== 处理第 $((count+1)) 个镜像: $line ==="
+          
           docker pull $line
-          # 获取镜像的完整名称，例如kasmweb/nginx:1.25.3（命名空间/镜像名:版本号）
           image=$(echo "$line" | awk '{print $NF}')
-          # 获取 镜像名:版本号  例如nginx:1.25.3
           image_name_tag=$(echo "$image" | sed 's#/#_#g')
           new_image="$ALIYUN_REGISTRY/$ALIYUN_NAME_SPACE/$image_name_tag"
-          echo "docker tag $image $new_image"
+          
           docker tag $image $new_image
-          echo "docker push $new_image"
           docker push $new_image
+          
+          # 立即清理
+          docker rmi $image $new_image || true
+          docker system prune -f
+          
+          count=$((count+1))
+          echo "当前磁盘空间:"
+          df -h
+          
         done < images.txt
