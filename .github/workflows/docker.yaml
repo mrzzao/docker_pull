@@ -30,32 +30,17 @@ jobs:
     - name: Build and push image Aliyun
       run: |
         docker login -u $ALIYUN_REGISTRY_USER -p $ALIYUN_REGISTRY_PASSWORD $ALIYUN_REGISTRY
-        
-        cd $GITHUB_WORKSPACE
-        
-        echo "开始处理镜像..."
-        count=0
         while IFS= read -r line; do
           [[ -z "$line" ]] && continue
-          echo "=== 处理第 $((count+1)) 个镜像: $line ==="
-          
-          # 拉取镜像
+          echo "docker pull $line"
           docker pull $line
-          
-          # 重新标签
+          # 获取镜像的完整名称，例如kasmweb/nginx:1.25.3（命名空间/镜像名:版本号）
           image=$(echo "$line" | awk '{print $NF}')
+          # 获取 镜像名:版本号  例如nginx:1.25.3
           image_name_tag=$(echo "$image" | sed 's#/#_#g')
           new_image="$ALIYUN_REGISTRY/$ALIYUN_NAME_SPACE/$image_name_tag"
-          
+          echo "docker tag $image $new_image"
           docker tag $image $new_image
+          echo "docker push $new_image"
           docker push $new_image
-          
-          # 清理本地镜像
-          docker rmi $image $new_image || true
-          
-          count=$((count+1))
-          echo "已完成 $count 个镜像"
-          
         done < images.txt
-        
-        echo "成功处理 $count 个镜像"
