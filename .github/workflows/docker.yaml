@@ -22,7 +22,7 @@ jobs:
     - name: Move Docker storage to /mnt
       uses: ./.github/actions/maximize-disk-space
       with:
-        enable-move: true
+        enable-clean: true
 
     - name: Setup Docker buildx
       uses: docker/setup-buildx-action@v3
