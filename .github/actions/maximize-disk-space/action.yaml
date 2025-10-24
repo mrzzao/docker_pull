@@ -1,132 +1,71 @@
-name: 'Maximize build disk space'
-description: 'Maximize the available disk space for your build job'
+name: 'Move Docker storage'
+description: 'Move Docker data directory to /mnt partition for more space'
 branding:
-  icon: 'crop'
-  color: 'orange'
+  icon: 'hard-drive'
+  color: 'blue'
 inputs:
-  root-reserve-mb:
-    description: 'Space to be left free on the root filesystem, in Megabytes.'
-    required: false
-    default: '1024'
-  temp-reserve-mb:
-    description: 'Space to be left free on the temp filesystem (/mnt), in Megabytes.'
-    required: false
-    default: '100'
-  swap-size-mb:
-    description: 'Swap space to create, in Megabytes.'
-    required: false
-    default: '4096'
-  overprovision-lvm:
-    description: 'Create the LVM disk images as sparse files'
-    required: false
-    default: 'false'
-  remove-dotnet:
-    description: 'Removes .NET runtime and libraries. (frees ~17 GB)'
-    required: false
-    default: 'false'
-  remove-android:
-    description: 'Removes Android SDKs and Tools. (frees ~11 GB)'
-    required: false
-    default: 'false'
-  remove-haskell:
-    description: 'Removes GHC (Haskell) artifacts. (frees ~2.7 GB)'
-    required: false
-    default: 'false'
-  remove-codeql:
-    description: 'Removes CodeQL Action Bundles. (frees ~5.4 GB)'
-    required: false
-    default: 'false'
-  remove-docker-images:
-    description: 'Removes cached Docker images. (frees ~3 GB)'
-    required: false
-    default: 'false'
-  move-docker-to-mnt:
-    description: 'Move Docker data directory to /mnt partition'
+  enable-move:
+    description: 'Enable moving Docker data to /mnt'
     required: false
     default: 'true'
 
 runs:
   using: "composite"
   steps:
-    - name: Disk space report before modification
+    - name: Check disk space before move
       shell: bash
       run: |
-        echo "Memory and swap:"
-        sudo free -h
-        echo
-        sudo swapon --show
-        echo
-        echo "Available storage:"
-        sudo df -h
-        echo
-
-    - name: Remove unwanted software
-      shell: bash
-      run: |
-        echo "Removing unwanted software..."
-        if [[ ${{ inputs.remove-dotnet }} == 'true' ]]; then
-          sudo rm -rf /usr/share/dotnet
-        fi
-        if [[ ${{ inputs.remove-android }} == 'true' ]]; then
-          sudo rm -rf /usr/local/lib/android
-        fi
-        if [[ ${{ inputs.remove-haskell }} == 'true' ]]; then
-          sudo rm -rf /opt/ghc
-        fi
-        if [[ ${{ inputs.remove-codeql }} == 'true' ]]; then
-          sudo rm -rf /opt/hostedtoolcache/CodeQL
-        fi
-        if [[ ${{ inputs.remove-docker-images }} == 'true' ]]; then
-          sudo docker image prune --all --force
-        fi
-        echo "... done"
+        echo "=== 当前磁盘空间 ==="
+        df -h
+        echo "=== Docker 存储信息 ==="
+        docker system df || true
 
     - name: Move Docker data to /mnt
-      if: inputs.move-docker-to-mnt == 'true'
+      if: inputs.enable-move == 'true'
       shell: bash
       run: |
-        echo "=== Moving Docker data to /mnt ==="
-        echo "Before moving:"
-        df -h
+        echo "=== 移动 Docker 数据到 /mnt 分区 ==="
         
-        # Stop Docker service
-        sudo systemctl stop docker || true
+        # 停止 Docker 服务
+        echo "停止 Docker 服务..."
+        sudo systemctl stop docker
         
-        # Remove old data in /mnt if exists
+        # 清理 /mnt 下的旧数据（如果有）
+        echo "清理 /mnt 下的旧数据..."
         sudo rm -rf /mnt/docker
         
-        # Move Docker data to /mnt
+        # 移动 Docker 数据到 /mnt
+        echo "移动 Docker 数据..."
         if [ -d "/var/lib/docker" ]; then
           sudo mv /var/lib/docker /mnt/
+          echo "成功移动现有 Docker 数据"
         else
-          echo "Docker directory not found, creating new one in /mnt"
           sudo mkdir -p /mnt/docker
+          echo "创建新的 Docker 数据目录"
         fi
         
-        # Create symbolic link
+        # 创建符号链接
+        echo "创建符号链接..."
         sudo ln -sf /mnt/docker /var/lib/docker
         
-        # Start Docker service
+        # 启动 Docker 服务
+        echo "启动 Docker 服务..."
         sudo systemctl start docker
         
-        # Wait for Docker to start
-        sleep 10
+        # 等待 Docker 启动
+        sleep 5
         
-        echo "After moving:"
-        df -h
-        echo "Docker info:"
-        docker system df
+        echo "Docker 数据移动完成"
 
-    - name: Disk space report after modification
+    - name: Verify Docker storage
       shell: bash
       run: |
-        echo "Memory and swap:"
-        sudo free -h
-        echo
-        sudo swapon --show
-        echo
-        echo "Available storage:"
-        sudo df -h
-        echo
-        echo "Docker storage info:"
-        docker system df
+        echo "=== 验证 Docker 存储 ==="
+        echo "磁盘空间:"
+        df -h
+        echo "Docker 根目录:"
+        docker info | grep "Docker Root Dir" || echo "Docker 未运行"
+        echo "符号链接:"
+        ls -la /var/lib/docker
+        echo "实际数据位置:"
+        ls -la /mnt/docker
