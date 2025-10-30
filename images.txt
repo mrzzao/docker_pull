@@ -1,1 +1,1 @@
-lmsysorg/sglang:v0.5.4
+influxdb:2.7
