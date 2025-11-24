@@ -1,1 +1,1 @@
-nocodb/nocodb:0.265.1
+nocobase/nocobase:1.9.11-full
