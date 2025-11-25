@@ -1,4 +1,11 @@
 rabbitmq:3.12-management
 golang:1.23-alpine
 postgres:15-alpine
-valkey:7.2-alpine
+alpine:latest
+golang:1.23-bullseye
+ubuntu:22.04
+golang:1.23-alpine
+node:18-alpine
+valkey/valkey:7.2-alpine
+
+
