@@ -1,1 +1,4 @@
-nocobase/nocobase:1.9.11-full
+rabbitmq:3.12-management
+golang:1.23-alpine
+postgres:15-alpine
+valkey:7.2-alpine
