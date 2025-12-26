@@ -1,1 +1,1 @@
-whyour/qinglong:2.19.2
+python:3.11-slim-bullseye
