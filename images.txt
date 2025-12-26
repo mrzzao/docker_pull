@@ -1,1 +1,1 @@
-python:3.11-slim-bullseye
+germannewsmaker/nexterm:1.0.7-OPEN-PREVIEW
