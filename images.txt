@@ -1,1 +1,2 @@
-germannewsmaker/nexterm:1.0.7-OPEN-PREVIEW
+postgres:17
+dushixiang/pika:0
