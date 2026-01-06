@@ -1,1 +1,1 @@
-victoriametrics/victoria-metrics:v1.131.0
+n8nio/n8n:2.2.3
