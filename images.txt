@@ -1,1 +1,1 @@
-n8nio/n8n:2.2.3
+dushixiang/pika:0.1.1
