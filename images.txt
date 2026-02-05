@@ -1,1 +1,1 @@
-wgportal/wg-portal:v2.1.1
+dushixiang/pika:0.1.3
