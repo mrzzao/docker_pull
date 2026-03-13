@@ -1,1 +1,1 @@
-vllm/vllm-openai:cu130-nightly
+pytorch/pytorch:latest
