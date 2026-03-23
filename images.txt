@@ -1,1 +1,1 @@
-pytorch/pytorch:latest
+linuxserver/wireguard:1.0.20250521
