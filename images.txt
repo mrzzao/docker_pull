@@ -1,1 +1,1 @@
-1467078763/metapi:main
+ghcr.io/cjackhwang/ds2api:v2.5.0
