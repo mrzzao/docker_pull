@@ -1,1 +1,1 @@
-ghcr.io/ggml-org/llama.cpp:server-b8840
+ghcr.io/ggml-org/llama.cpp:server-cuda12-b8840
