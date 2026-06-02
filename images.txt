@@ -1,1 +1,1 @@
-ghcr.io/ggml-org/llama.cpp:server-cuda12-b8840
+ghcr.io/cjackhwang/ds2api:v4.6.1
