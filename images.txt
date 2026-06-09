@@ -1,1 +1,1 @@
-dushixiang/pika:0.1.13
+eceasy/cli-proxy-api:v7.1.56
