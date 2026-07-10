@@ -1,1 +1,1 @@
-chrislusf/seaweedfs:4.35
+lmsysorg/sglang:v0.5.14-cu129
