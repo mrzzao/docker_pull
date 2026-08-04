@@ -1,1 +1,1 @@
-tooljet/tooljet:v3.20.205-lts
+nocobase/nocobase:2.1.34-full
