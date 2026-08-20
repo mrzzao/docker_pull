@@ -1,1 +1,1 @@
-nocobase/nocobase:2.1.34-full
+lmsysorg/sglang:v0.5.17
