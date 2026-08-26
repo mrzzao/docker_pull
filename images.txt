@@ -1,1 +1,3 @@
-lmsysorg/sglang:v0.5.17
+node:24-alpine
+golang:1.25-alpine
+alpine:latest
