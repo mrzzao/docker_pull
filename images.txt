@@ -1,3 +1,5 @@
-node:24-alpine
-golang:1.25-alpine
-alpine:latest
+mysql:8
+redis:6.2
+victoriametrics/victoria-metrics:v1.79.12
+flashcatcloud/nightingale:9.1.1
+flashcatcloud/categraf:v0.5.18
