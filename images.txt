@@ -1,1 +1,1 @@
-docker pull ypptec/nascabos:1.2.3
+ypptec/nascabos:1.2.3
