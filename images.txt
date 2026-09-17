@@ -1,2 +1,2 @@
 arm
-lmsysorg/sglang:qwen38flashnext
+vllm/vllm-openai:qwen38-flash-next-arm64-cu130
