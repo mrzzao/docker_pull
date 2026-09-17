@@ -8,7 +8,10 @@
   ALIYUN_REGISTRY: "registry.cn-hangzhou.aliyuncs.com"
   #ALIYUN_NAME_SPACE: "${{ secrets.ALIYUN_NAME_SPACE }}"
   ALIYUN_NAME_SPACE: "githubimage"
-> 默认是amd64镜像，其他的自己想办法。。
+> 修改一下脚本，images.txt第一条固定为：amd或者arm
+> 如果是amd则阿里云命名空间是：githubimage，如果是arm则是githubimage_arm
+> 循环下载镜像时不读取第一条。
+> docker pull的时候根据images.txt第一条来拉取是arm镜像还是amd镜像
 # Docker Images Pusher
 
 使用Github Action将DockerHub镜像转存到阿里云私有仓库，供国内服务器使用，免费易用
