@@ -1,1 +1,2 @@
-ypptec/nascabos:1.2.3
+arm
+lmsysorg/sglang:qwen38flashnext
