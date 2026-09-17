@@ -7,7 +7,6 @@ on:
 
 env:
   ALIYUN_REGISTRY: "registry.cn-hangzhou.aliyuncs.com"
-  ALIYUN_NAME_SPACE: "githubimage"
   ALIYUN_REGISTRY_USER: "${{ secrets.ALIYUN_REGISTRY_USER }}"
   ALIYUN_REGISTRY_PASSWORD: "${{ secrets.ALIYUN_REGISTRY_PASSWORD }}"
 
@@ -30,10 +29,30 @@ jobs:
     - name: Build and push image Aliyun
       run: |
         docker login -u $ALIYUN_REGISTRY_USER -p $ALIYUN_REGISTRY_PASSWORD $ALIYUN_REGISTRY
-        while IFS= read -r line; do
+
+        # 读取第一行，确定架构
+        ARCH=$(head -n 1 images.txt | tr -d '[:space:]')
+        echo "架构标识：$ARCH"
+
+        if [[ "$ARCH" == "amd" ]]; then
+          ALIYUN_NAME_SPACE="githubimage"
+          PLATFORM="linux/amd64"
+        elif [[ "$ARCH" == "arm" ]]; then
+          ALIYUN_NAME_SPACE="githubimage_arm"
+          PLATFORM="linux/arm64"
+        else
+          echo "错误：images.txt 第一行必须是 amd 或 arm，实际为：$ARCH"
+          exit 1
+        fi
+
+        echo "命名空间：$ALIYUN_NAME_SPACE"
+        echo "平台：$PLATFORM"
+
+        # 从第二行开始循环
+        tail -n +2 images.txt | while IFS= read -r line; do
           [[ -z "$line" ]] && continue
-          echo "docker pull $line"
-          docker pull $line
+          echo "docker pull --platform $PLATFORM $line"
+          docker pull --platform $PLATFORM $line
           # 获取镜像的完整名称，例如kasmweb/nginx:1.25.3（命名空间/镜像名:版本号）
           image=$(echo "$line" | awk '{print $NF}')
           # 获取 镜像名:版本号  例如nginx:1.25.3
@@ -44,4 +63,4 @@ jobs:
           docker tag $image $new_image
           echo "docker push $new_image"
           docker push $new_image
-        done < images.txt
+        done
