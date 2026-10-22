@@ -1,2 +1,3 @@
 arm
-calciumion/new-api:v1.0.0-rc.46
+redis:6.2
+postgres:15
