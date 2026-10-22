@@ -1,6 +1,2 @@
-amd
-mysql:8
-redis:6.2
-victoriametrics/victoria-metrics:v1.79.12
-flashcatcloud/nightingale:9.2.0
-flashcatcloud/categraf:v0.5.18
+arm
+calciumion/new-api:v1.0.0-rc.46
