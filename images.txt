@@ -1,4 +1,2 @@
-amd
-calciumion/new-api:v1.0.0-rc.47
-redis:6.2
-postgres:15
+arm
+vllm/vllm-openai:nightly
