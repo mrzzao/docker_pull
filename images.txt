@@ -1,2 +1,2 @@
 arm
-vllm/vllm-openai:nightly
+vllm/vllm-openai:nightly-dev-arm64-cu130-3af35c1
