@@ -1,4 +1,4 @@
-arm
-vllm/vllm-openai:v0.32.0-ubuntu2404
-vllm/vllm-openai:v0.32.0-aarch64-cu129
-vllm/vllm-openai:v0.32.0-aarch64
+amd
+navidrome/navidrome:pr-6222
+vaultwarden/server:1.37.4
+qdtoday/qd:20250803
