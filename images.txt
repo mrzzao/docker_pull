@@ -1,2 +1,3 @@
 amd
-ollama/ollama:0.40.13
+guohuiyuan/go-music-dl:1.1.3
+ghcr.io/ggml-org/llama.cpp:server-intel
