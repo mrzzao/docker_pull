@@ -1,4 +1,2 @@
 amd
-navidrome/navidrome:pr-6222
-vaultwarden/server:1.37.4
-qdtoday/qd:20250803
+ollama/ollama:0.40.13
