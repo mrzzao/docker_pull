@@ -1,2 +1,2 @@
 amd
-svenshi/oxidns:v1.6.1
+adguard/adguardhome:v0.107.80
