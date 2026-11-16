@@ -1,2 +1,2 @@
 amd
-adguard/adguardhome:v0.107.80
+ypptec/nascabos:1.2.5
