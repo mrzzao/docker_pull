@@ -1,2 +1,2 @@
 arm
-ghcr.io/huggingface/text-embeddings-inference:latest
+ghcr.io/huggingface/text-embeddings-inference:121-1.9
