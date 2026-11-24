@@ -1,2 +1,2 @@
-amd
-ypptec/nascabos:1.2.5
+arm
+lmsysorg/sglang:v0.5.23
