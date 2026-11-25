@@ -1,2 +1,2 @@
 amd
-ghcr.io/huggingface/text-embeddings-inference:cpu-1.9
+vllm/vllm-openai-cpu:v0.33.0
