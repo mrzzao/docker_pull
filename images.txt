@@ -1,3 +1,2 @@
 amd
-ghcr.io/huggingface/text-embeddings-inference:rocm-sha-6d15a36-grpc
-vllm/vllm-openai:v0.34.0
+ghcr.io/huggingface/text-embeddings-inference:cpu-1.9
