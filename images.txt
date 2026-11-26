@@ -1,2 +1,2 @@
-amd
-vllm/vllm-openai-cpu:v0.33.0
+arm
+lmsysorg/sglang:inkling-2-mini
